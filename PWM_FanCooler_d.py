@@ -11,6 +11,8 @@ import daemon
 import daemon.pidfile
 #from daemon.pidlockfile import PIDLockFile
 
+import math
+
 # GPIOのピン番号を定義
 PIN = 18
 
@@ -56,6 +58,18 @@ def get_duty(tmp=low):
         rs = bottom + ((top - bottom) / (height - low)) * (tmp - low)
     return rs
 
+
+def func(x):
+    y = 50.0
+    if x >= 80:
+        y = 100.0
+    elif x < 30:
+        y = 20.0
+    else:
+        y = 40 * (math.sin(math.pi / 50 * (x - 55))) + 60.0
+
+    return y
+
 # =========
 # PWM実行
 # =========
@@ -80,7 +94,8 @@ def exec_pwm():
             # CPUの温度を取得
             CPU_Temp = get_CPU_Temperature()
             # CPUの温度によって出力を変更
-            Duty = get_duty(CPU_Temp)
+            #Duty = get_duty(CPU_Temp)
+            Duty = func(CPU_Temp)
             # 出力を変更して、10秒間待機
             p.ChangeDutyCycle(Duty)
             time.sleep(10)
