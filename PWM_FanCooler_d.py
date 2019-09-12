@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # coding: utf-8
 
 # モジュールをインポート
@@ -61,6 +61,7 @@ def get_duty(tmp=low):
 
 def func(x):
     y = 60.0
+
     if x >= 80:
         y = 100.0
     elif x < 30:
